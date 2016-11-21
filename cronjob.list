@@ -1,0 +1,28 @@
+# 1 1 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/koalaDailyEvents/localPull.sh >> /tmp/localpullAfter04.log
+# 1 9 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/onionsBackupLeewei/cpLeeBak.sh >> /tmp/LeeAfter0409.log
+# 0 12 * * 6 /usr/bin/time /bin/bash /home/master/Scripts/weekly_report/run.sh >> /tmp/weekly_tao.log 2>&1
+# 0 13 * * 6 cd /home/master/data_archive/weekly; /usr/bin/time /bin/bash /home/master/data_archive/weekly/run.sh >> /tmp/weekly_tao.log 2>&1
+# v3_5 cronjob
+# 10 4 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/v3_5collections/pull_all_useful_collections_from_bd.sh >> /tmp/localpullv3_5.log
+# 15 5 * * * /usr/bin/python /home/master/yangcongDatabase/v3_5collections/service/smack_my_log_to_guanghe.py 
+# 7 9 * * * /usr/bin/python /home/master/yangcongDatabase/v3_5collections/service/smack_my_log_to_guanghe.py 
+#10 7 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/v3_5collections/pull_all_useful_collections_from_bd.sh >> /tmp/localpullv3_5.log
+#36 9 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/v3_5collections/pull_all_useful_collections_from_bd.sh >> /tmp/localpullv3_5.log
+#1 4 * * * /usr/bin/time /bin/bash /home/master/yangcongDatabase/v3_5collections/pull_all_useful_collections_from_bd.sh >> /tmp/localpullv3_5.log && /bin/bash /home/master/yangcongDatabase/v3_5collections/service/cache_user_location_dump.sh >> /tmp/cacheuserv35.log
+# 1 5 * * * /bin/bash /home/master/Scripts/BackupScript/pullCacheUse > /tmp/pullCacheUse.log && /usr/bin/python /home/master/Scripts/BackupScript/cache.py > /tmp/cacheTao.log
+# 1 2 * * * /usr/bin/time /bin/bash /home/master/Scripts/BackupScript/xserver.sh >> /tmp/bd2xBackup.log
+# 45 0 * * * /bin/bash /home/master/Scripts/BackupScript/increamentalBackupScript/pullOneDayEvents > /tmp/pullOneDayEvents.log && echo "--------------" >> /tmp/pullOneDayEvents.log
+# ruyue address info monday:17:00
+# 0 17 * * 1 /usr/bin/time /bin/bash /srv/shiny-server/map/user_map/map_py/runCronJob.sh >> ruyueAddressInfo.log
+
+# v4 cronjob
+3 7 * * * /bin/bash /home/master/yangcongDatabase/v4collections/temp/usersCollecion.sh >> /tmp/daily88copy.log && /bin/bash /home/master/yangcongDatabase/v4collections/pull_all_useful_collections_from_bd_v4_final_version.sh >> /tmp/localpullv4.log && /bin/bash /home/master/yangcongDatabase/v4collections/temp/getMeProfile.sh >> /tmp/daily88copy.log
+# 55 6 * * * /bin/bash /home/master/yangcongDatabase/v4collections/pull_all_useful_collections_from_bd_v4_final_version.sh >> /tmp/localpullv4.log 
+
+# backup monitor
+10 13 * * * cd /home/master/yangcongDatabase/monitorBackup/ && /usr/bin/python ./dataGenterator.py
+
+# mongodb monitor
+5 * * * * cd /home/master/yangcongDatabase/monitorBackup/ && /usr/bin/python ./monitOnMongoDbInstance.py > /mongodbInstance.log
+
+# 4 11 * * * /usr/local/bin/python3 /srv/shiny-server/payment/payment_listen_test.py > /tmp/guojie.log

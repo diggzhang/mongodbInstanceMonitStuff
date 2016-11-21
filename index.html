@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>数据库备份监控</title>
+    <!-- 引入 G2 文件 -->
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://as.alipayobjects.com/g/datavis/g2/2.0.5/index.js"></script>
+
+    <style>
+    </style>
+  </head>
+  <body>
+    <!-- 创建图表容器 -->
+    <h2>eventv4 daily count</h2>
+    <div id="historyViz"></div>
+    <hr>
+    <h2>collections count</h2>
+    <div id="c1"></div>
+
+    <script>
+
+      $.getJSON('/dbCountData.json', function(data){
+
+          var chart = new G2.Chart({
+            id: 'c1', // 指定图表容器 ID
+            width : 900, // 指定图表宽度
+            height : 400 // 指定图表高度
+          });
+
+          chart.source(data, {
+            genre: {
+              alias: '日常collections' // 列定义，定义该属性显示的别名
+            },
+            sold: {
+              alias: '量级'
+            }
+          });
+
+          chart.interval().position('genre*sold').color('genre')
+          chart.render();
+      });// G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
+
+      $.getJSON('/eventv4DailyCount.json', function(historyData) {
+          // Step 1: 创建 Chart 对象
+          var historyChart = new G2.Chart({
+              id: 'historyViz',
+              width : 1000, // 指定图表宽度
+              height : 400 // 指定图表高度
+          });
+
+          // Step 2: 载入数据源
+          historyChart.source(historyData, {
+              date: {
+                alias: 'eventV4近期数据条数count'
+              },
+              count: {
+                alias: '量级'
+              }
+          });
+
+          // Step 3：创建图形语法，绘制柱状图，由 genre 和 sold 两个属性决定图形位置，genre 映射至 x 轴，sold 映射至 y 轴
+          historyChart.line().position('date*count')
+          // Step 4: 渲染图表
+          historyChart.render();
+      });
+
+
+
+
+
+
+    </script>
+  </body>
+</html>
